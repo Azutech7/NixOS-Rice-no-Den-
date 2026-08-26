@@ -1,0 +1,19 @@
+{ inputs, pkgs, lib, host, user, ... }: {
+
+    options.modules.firefox.enable = lib.mkEnableOption "firefox";
+
+    config = lib.mkIf config.modules.firefox.enable {
+
+        programs.firefox = {
+            enable = true;
+
+            policies = {
+                Preferences = {
+                    "network.dns.echconfig.enabled" = true;
+                    "network.dns.use_https_rr_as_alpn" = true;
+                };
+            };
+        };
+
+    };
+}
