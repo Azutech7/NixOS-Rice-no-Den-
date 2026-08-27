@@ -11,3 +11,5 @@ imports = [ inputs.den.flakeModule ];
 			
 	};
 }
+
+#### WHY DOES THIS FILE EXIST, LOOK AT 'common.input.touchpad.nix'

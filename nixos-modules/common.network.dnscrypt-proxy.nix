@@ -1,0 +1,29 @@
+{ inputs, config, pkgs, lib, host, ... }: {
+
+	options.modules.common.network.dnscrypt-proxy.enable = lib.mkEnableOption "common.network.dnscrypt-proxy";
+
+	config = lib.mkIf config.modules.common.network.dnscrypt-proxy.enable {
+
+		services.dnscrypt-proxy = {
+				enable = true;
+				settings = {
+				
+				server_names = [ "cloudflare" "quad9-dnscrypt-main" ];
+				
+				listen_addresses = [ "127.0.0.1:5353" ];
+
+				require_dnssec = true;
+				require_nofilter = false;
+				require_nolog = true;
+
+				ipv6_servers = false;
+			};
+		};
+
+		networking = {
+			nameservers = lib.mkForce [ "127.0.0.1" ];
+			networkmanager.dns = lib.mkForce "none";
+		};
+
+	};
+}
