@@ -1,0 +1,30 @@
+{
+    imports = [
+        ./captive-browser.nix
+        ./common.audio.pipewire.nix
+        ./common.boot.nix
+        ./common.hardware.automatic-compatability.nix
+        ./common.hardware.graphics.intel-mesa.nix
+        ./common.hardware.graphics.nix
+        ./common.hardware.graphics.nvidia.nix
+        ./common.home-manager.backup.nix
+        ./common.input.touchpad.nix
+        ./common.laptop.battery-optimizations.nix
+        ./common.network.avahi.nix
+        ./common.network.bluetooth.nix
+        ./common.network.networkmanager.nix
+        ./common.network.openssh.nix
+        ./common.network.printing.nix
+        ./common.network.security.dnscrypt-proxy.nix
+        ./common.network.security.firewall.nix
+        ./common.network.security.unbound.nix
+        ./common.security.gnupg.nix
+        ./common.security.pam.nix
+        ./common.storage.nixpkgs.nix
+        ./common.storage.space-optimization.nix
+        ./flatpak.nix
+        ./hyprland.nix
+        ./ly.nix
+        ./steam.nix
+    ];
+}
