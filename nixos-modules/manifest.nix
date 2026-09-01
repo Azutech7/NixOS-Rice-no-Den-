@@ -1,4 +1,4 @@
-{
+{ ... }: {
     imports = [
         ./captive-browser.nix
         ./common.audio.pipewire.nix

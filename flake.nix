@@ -1,24 +1,41 @@
-# DO-NOT-EDIT. This file was auto-generated using github:vic/flake-file.
-# Use `nix run .#write-flake` to regenerate it.
 {
-  outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } (inputs.import-tree ./modules);
+  description = "Azutech NixOS Rice";
 
   inputs = {
-    den.url = "github:denful/den";
-    disko = {
-      url = "github:nix-community/disko";
-      inputs.nixpkgs.follows = "nixpkgs";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+
+    home-manager.url = "github:nix-community/home-manager";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+  };
+
+  outputs = { self, nixpkgs, home-manager, ... }@inputs: {
+
+
+
+    nixosConfigurations.<HOST_NAME> = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      
+      specialArgs = { inherit inputs; }; 
+
+      modules = [
+        ./hosts/<HOST_NAME>/config.nix
+
+        home-manager.nixosModules.home-manager
+        {
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+
+          home-manager.extraSpecialArgs = { inherit inputs; };
+          
+          home-manager.users = {
+            <USER_NAME> = import ./users/<USER_NAME>/config.nix;
+          };
+
+        }
+      ];
     };
-    flake-file.url = "github:denful/flake-file";
-    flake-parts = {
-      url = "github:hercules-ci/flake-parts";
-      inputs.nixpkgs-lib.follows = "nixpkgs";
-    };
-    home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    import-tree.url = "github:vic/import-tree";
-    nixpkgs.url = "https://channels.nixos.org/nixpkgs-unstable/nixexprs.tar.xz";
+
+
+
   };
 }
