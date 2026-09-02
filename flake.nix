@@ -1,41 +1,41 @@
 {
-  description = "Azutech NixOS Rice";
+    description = "Azutech NixOS Rice";
 
-  inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    inputs = {
+        nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
-    home-manager.url = "github:nix-community/home-manager";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
-  };
-
-  outputs = { self, nixpkgs, home-manager, ... }@inputs: {
-
-
-
-    nixosConfigurations.<HOST_NAME> = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      
-      specialArgs = { inherit inputs; }; 
-
-      modules = [
-        ./hosts/<HOST_NAME>/config.nix
-
-        home-manager.nixosModules.home-manager
-        {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-
-          home-manager.extraSpecialArgs = { inherit inputs; };
-          
-          home-manager.users = {
-            <USER_NAME> = import ./users/<USER_NAME>/config.nix;
-          };
-
-        }
-      ];
+        home-manager.url = "github:nix-community/home-manager";
+        home-manager.inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    outputs = { self, nixpkgs, home-manager, ... }@inputs: {
 
 
-  };
+
+        nixosConfigurations.<HOST_NAME> = nixpkgs.lib.nixosSystem {
+            system = "x86_64-linux";
+
+            specialArgs = { inherit inputs; }; 
+
+            modules = [
+                ./hosts/<HOST_NAME>/config.nix
+
+                home-manager.nixosModules.home-manager
+                {
+                    home-manager.useGlobalPkgs = true;
+                    home-manager.useUserPackages = true;
+
+                    home-manager.extraSpecialArgs = { inherit inputs; };
+
+                    home-manager.users = {
+                        <USER_NAME> = import ./users/<USER_NAME>/config.nix;
+                    };
+
+                }
+            ];
+        };
+
+
+
+    };
 }
